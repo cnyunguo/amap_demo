@@ -24,6 +24,9 @@
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
+        
+        <service android:name="im.zoe.labs.flutter_floatwing.FloatwingService"
+            android:label="Floatwing Service"/>
         <meta-data
             android:name="com.amap.api.v2.apikey"
             android:value="ac9279b912e6820d5e809749b4b8bdee"/>

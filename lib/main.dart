@@ -2,11 +2,12 @@
 import 'package:amap_map_fluttify/amap_map_fluttify.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_floatwing/flutter_floatwing.dart';
+import 'package:map_demo/traveling_app.dart';
 
 void main() async {
   await FloatwingPlugin().ensureWindow();
   if (FloatwingPlugin().isWindow) {
-    // runApp(const TravelingApp());
+    runApp(const TravelingApp());
   } else {
     await AmapService.instance.init(
       iosKey: '7a04506d15fdb7585707f7091d715ef4',
@@ -48,25 +49,35 @@ class _MyHomePageState extends State<MyHomePage> {
     Location _userLocation = await AmapLocation.instance.fetchLocation(
         mode: LocationAccuracy.High, timeout: const Duration(seconds: 3));
     setState(() {
+      print({"location": _userLocation.toString()});
       location = _userLocation;
     });
   }
 
-  openFloatWindow() async {
+  init() async {
     var p1 = await FloatwingPlugin().checkPermission();
     if (!p1) {
       FloatwingPlugin().openPermissionSetting();
       return;
     }
-    w = WindowConfig(id: 'floatWindow', autosize: true, draggable: true).to();
+    w = WindowConfig(
+            id: 'floatWindow', height: 100, width: 100, draggable: true)
+        .to();
 
     await FloatwingPlugin().initialize();
-    await FloatwingPlugin().isServiceRunning().then((v) async {
-      if (!v) {
-        await FloatwingPlugin().startService().then((_) {});
-      }
-    });
-    w?.create(start: true);
+    if (!await FloatwingPlugin().isServiceRunning()) {
+      await FloatwingPlugin().startService();
+    }
+  }
+
+  openFloatWindow() async {
+    await w?.create(start: true);
+  }
+
+  @override
+  void initState() {
+    init();
+    super.initState();
   }
 
   @override
