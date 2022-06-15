@@ -92,10 +92,10 @@ class _MyHomePageState extends State<MyHomePage> {
           children: <Widget>[
             Container(
               padding: const EdgeInsets.all(20),
-              decoration: const BoxDecoration(color: Colors.blue),
+              decoration: BoxDecoration(color: Colors.grey[300]),
               child: Text(
-                location?.toString() ?? '未获取位置',
-                style: const TextStyle(color: Colors.white),
+                location?.toString() ?? '位置结果',
+                style: const TextStyle(color: Colors.black),
               ),
             ),
             const SizedBox(
@@ -105,16 +105,23 @@ class _MyHomePageState extends State<MyHomePage> {
               color: Colors.blue,
               onPressed: openFloatWindow,
               child: const Text(
-                "打开悬浮窗",
+                "第一步：打开悬浮窗",
+                style: TextStyle(color: Colors.white),
+              ),
+            ),
+            const SizedBox(
+              height: 50,
+            ),
+            MaterialButton(
+              color: Colors.blue,
+              onPressed: getLocation,
+              child: const Text(
+                "第二步：获取位置",
                 style: TextStyle(color: Colors.white),
               ),
             )
           ],
         ),
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: getLocation,
-        child: const Icon(Icons.location_on),
       ),
     );
   }
